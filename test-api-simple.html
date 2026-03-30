@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-area { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 10px 0; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; white-space: pre-wrap; }
+        .error { background: #f8d7da; color: #721c24; }
+        .success { background: #d4edda; color: #155724; }
+    </style>
+</head>
+<body>
+    <h1>🤖 Chatbot API Test</h1>
+    
+    <div class="test-area">
+        <h3>Test 1: Simple Hello</h3>
+        <button onclick="testSimple()">Test Simple Message</button>
+        <div id="result1" class="result"></div>
+    </div>
+    
+    <div class="test-area">
+        <h3>Test 2: Coding Question</h3>
+        <button onclick="testCoding()">Test Coding Question</button>
+        <div id="result2" class="result"></div>
+    </div>
+    
+    <div class="test-area">
+        <h3>Test 3: Different API Key</h3>
+        <button onclick="testDifferentKey()">Test with Different Key</button>
+        <div id="result3" class="result"></div>
+    </div>
+
+    <script>
+        const API_KEY = 'AIzaSyDMfOau3KqCvjlfi4DEMK06dhjoC0aqAcs';
+        const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+        
+        async function makeRequest(prompt, resultId) {
+            const resultDiv = document.getElementById(resultId);
+            resultDiv.textContent = 'Testing...';
+            resultDiv.className = 'result';
+            
+            try {
+                const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    resultDiv.textContent = `Error ${response.status}: ${errorText}`;
+                    resultDiv.className = 'result error';
+                    return;
+                }
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    resultDiv.textContent = `✅ SUCCESS!\n\nResponse: ${aiResponse}`;
+                    resultDiv.className = 'result success';
+                } else {
+                    resultDiv.textContent = `❌ Unexpected format: ${JSON.stringify(data, null, 2)}`;
+                    resultDiv.className = 'result error';
+                }
+            } catch (error) {
+                resultDiv.textContent = `❌ Network Error: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        function testSimple() {
+            makeRequest("Hello! Please respond with 'API is working'", 'result1');
+        }
+        
+        function testCoding() {
+            makeRequest("Write a simple Python function to calculate the factorial of a number", 'result2');
+        }
+        
+        function testDifferentKey() {
+            // Try with a different approach - using a public demo key
+            const demoKey = 'AIzaSyD4blWuXpc51mwSrTlOMdC8aAlEsxaOPkY';
+            const resultDiv = document.getElementById('result3');
+            resultDiv.textContent = 'Testing with different key...';
+            resultDiv.className = 'result';
+            
+            fetch(`${API_URL}?key=${demoKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: "Hello! Test message." }] }]
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    resultDiv.textContent = `✅ SUCCESS with different key!\n\nResponse: ${aiResponse}`;
+                    resultDiv.className = 'result success';
+                } else {
+                    resultDiv.textContent = `❌ Unexpected format: ${JSON.stringify(data, null, 2)}`;
+                    resultDiv.className = 'result error';
+                }
+            })
+            .catch(error => {
+                resultDiv.textContent = `❌ Error: ${error.message}`;
+                resultDiv.className = 'result error';
+            });
+        }
+    </script>
+</body>
+</html>

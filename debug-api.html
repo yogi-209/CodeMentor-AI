@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug API</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .test-area { background: white; padding: 20px; border-radius: 10px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 10px 5px; }
+        .button:hover { background: #0056b3; }
+        .result { margin-top: 15px; padding: 15px; border-radius: 5px; white-space: pre-wrap; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <h1>🔧 API Debug Tool</h1>
+    
+    <div class="test-area">
+        <h3>1. Test Server Connection</h3>
+        <button class="button" onclick="testServerConnection()">Test Server</button>
+        <div id="serverResult" class="result"></div>
+    </div>
+    
+    <div class="test-area">
+        <h3>2. Test AI API Endpoint</h3>
+        <input type="text" id="testMessage" placeholder="Enter test message" value="Hello, test message" style="width: 300px; padding: 8px; margin: 10px 0;">
+        <br>
+        <button class="button" onclick="testAIAPI()">Test AI API</button>
+        <div id="apiResult" class="result"></div>
+    </div>
+    
+    <div class="test-area">
+        <h3>3. Test Chatbot Integration</h3>
+        <button class="button" onclick="testChatbotIntegration()">Test Chatbot</button>
+        <div id="chatbotResult" class="result"></div>
+    </div>
+
+    <script>
+        async function testServerConnection() {
+            const resultDiv = document.getElementById('serverResult');
+            resultDiv.textContent = 'Testing server connection...';
+            resultDiv.className = 'result info';
+            
+            try {
+                const response = await fetch('/api/health');
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.textContent = `✅ Server is running!\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                    resultDiv.className = 'result success';
+                } else {
+                    resultDiv.textContent = `❌ Server responded with error: ${response.status} ${response.statusText}`;
+                    resultDiv.className = 'result error';
+                }
+            } catch (error) {
+                resultDiv.textContent = `❌ Server connection failed: ${error.message}\n\nMake sure the server is running on port 3000.`;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        async function testAIAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            const message = document.getElementById('testMessage').value;
+            
+            resultDiv.textContent = 'Testing AI API...';
+            resultDiv.className = 'result info';
+            
+            try {
+                const response = await fetch('/api/ai/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.textContent = `✅ AI API is working!\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                    resultDiv.className = 'result success';
+                } else {
+                    const errorData = await response.json();
+                    resultDiv.textContent = `❌ AI API error: ${response.status} ${response.statusText}\n\nError: ${JSON.stringify(errorData, null, 2)}`;
+                    resultDiv.className = 'result error';
+                }
+            } catch (error) {
+                resultDiv.textContent = `❌ AI API call failed: ${error.message}\n\nThis could be due to:\n- Server not running\n- CORS issues\n- Network problems`;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        async function testChatbotIntegration() {
+            const resultDiv = document.getElementById('chatbotResult');
+            resultDiv.textContent = 'Testing chatbot integration...';
+            resultDiv.className = 'result info';
+            
+            try {
+                // Test if the chatbot script is loaded
+                if (typeof FixedChatbot === 'undefined') {
+                    resultDiv.textContent = '❌ FixedChatbot class not found. Make sure fixed-chatbot.js is loaded.';
+                    resultDiv.className = 'result error';
+                    return;
+                }
+                
+                // Test if the chatbot elements exist
+                const toggle = document.getElementById('fixed-chatbot-toggle');
+                const container = document.getElementById('fixed-chatbot-container');
+                
+                if (!toggle || !container) {
+                    resultDiv.textContent = '❌ Chatbot elements not found. Make sure the chatbot HTML is properly created.';
+                    resultDiv.className = 'result error';
+                    return;
+                }
+                
+                resultDiv.textContent = '✅ Chatbot integration looks good!\n\n- FixedChatbot class is loaded\n- Chatbot elements are present\n- Ready to test the chatbot';
+                resultDiv.className = 'result success';
+                
+            } catch (error) {
+                resultDiv.textContent = `❌ Chatbot integration test failed: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        // Auto-test server connection on page load
+        window.addEventListener('load', () => {
+            testServerConnection();
+        });
+    </script>
+</body>
+</html>

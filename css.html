@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Tutorial</title>
+    <style>
+        /* CSS for parallax effect */
+        .parallax {
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax1 {
+            background-image: url("https://picsum.photos/1920/1080?random=15");
+        }
+
+        .parallax2 {
+            background-image: url("https://picsum.photos/1920/1080?random=16");
+        }
+
+        .parallax3 {
+            background-image: url("https://picsum.photos/1920/1080?random=17");
+        }
+
+        .parallax4 {
+            background-image: url("https://picsum.photos/1920/1080?random=18");
+        }
+
+        .parallax5 {
+            background-image: url("https://picsum.photos/1920/1080?random=19");
+        }
+
+        /* Styling for content sections */
+        .content {
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            font-size: 18px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+        }
+
+        .content:hover {
+            transform: translateY(-5px) rotateX(2deg) rotateY(4deg) scale(1.02);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+    <!-- Chatbot CSS -->
+    <link rel="stylesheet" href="chatbot-popup.css">
+</head>
+<body>
+    <div class="parallax parallax1"></div>
+    <div class="content">
+        <h2>What is CSS?</h2>
+        <p>
+            <span class="italic">CSS (Cascading Style Sheets)</span> is a style sheet language used for describing the presentation of a document written in HTML. CSS describes how elements should be rendered on screen, on paper, in speech, or on other media.
+        </p>
+        <p>
+            CSS was first proposed by Håkon Wium Lie in 1994 and has since become the standard styling language for web pages. It allows developers to control the layout, colors, fonts, and overall appearance of web pages.
+        </p>
+    </div>
+
+    <div class="parallax parallax2"></div>
+    <div class="content">
+        <h2>CSS Selectors</h2>
+        <p>CSS selectors are patterns used to select and style HTML elements:</p>
+        <ul>
+            <li><strong>Element Selector:</strong> Selects elements by tag name</li>
+            <li><strong>Class Selector:</strong> Selects elements with a specific class</li>
+            <li><strong>ID Selector:</strong> Selects elements with a specific ID</li>
+            <li><strong>Attribute Selector:</strong> Selects elements with specific attributes</li>
+            <li><strong>Pseudo-class Selector:</strong> Selects elements in specific states</li>
+        </ul>
+        <pre><code>/* Element selector */
+p {
+    color: blue;
+}
+
+/* Class selector */
+.highlight {
+    background-color: yellow;
+}
+
+/* ID selector */
+#header {
+    font-size: 24px;
+}</code></pre>
+    </div>
+
+    <div class="parallax parallax3"></div>
+    <div class="content">
+        <h2>CSS Box Model</h2>
+        <p>The CSS box model consists of:</p>
+        <ul>
+            <li><strong>Content:</strong> The actual content of the element</li>
+            <li><strong>Padding:</strong> Clear area around the content</li>
+            <li><strong>Border:</strong> A border around the padding</li>
+            <li><strong>Margin:</strong> Clear area outside the border</li>
+        </ul>
+        <pre><code>.box {
+    width: 200px;
+    height: 100px;
+    padding: 20px;
+    border: 2px solid black;
+    margin: 10px;
+    background-color: lightblue;
+}</code></pre>
+    </div>
+
+    <div class="parallax parallax4"></div>
+    <div class="content">
+        <h2>CSS Flexbox</h2>
+        <p>Flexbox is a one-dimensional layout method for arranging items in rows or columns:</p>
+        <pre><code>.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.item {
+    flex: 1;
+    margin: 10px;
+}</code></pre>
+        <p>Flexbox makes it easy to create responsive layouts and center content both horizontally and vertically.</p>
+    </div>
+
+    <div class="parallax parallax5"></div>
+    <div class="content">
+        <h2>CSS Grid</h2>
+        <p>CSS Grid is a two-dimensional layout system for creating complex web layouts:</p>
+        <pre><code>.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+}
+
+.grid-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}</code></pre>
+        <p>Grid allows for precise control over both rows and columns, making it perfect for complex layouts.</p>
+    </div>
+
+    <!-- Chatbot JavaScript -->
+    <script src="chatbot-popup.js"></script>
+</body>
+</html>
+

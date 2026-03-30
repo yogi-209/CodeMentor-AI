@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CodingStartup</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="chatbot-popup.css?v=1">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #e2e8f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .signup-container { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 20px; padding: 3rem; width: 100%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .logo { text-align: center; margin-bottom: 2rem; }
+        .logo h1 { font-size: 2rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.5rem; }
+        .logo p { color: #94a3b8; font-size: 0.9rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #cbd5e1; font-weight: 500; }
+        .form-group input { width: 100%; padding: 0.75rem 1rem; background: rgba(30, 41, 59, 0.8); border: 2px solid rgba(148, 163, 184, 0.2); border-radius: 10px; color: #e2e8f0; font-size: 1rem; transition: all 0.3s ease; }
+        .form-group input:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1); background: rgba(30, 41, 59, 1); }
+        .form-group input.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1); }
+        .form-group input.success { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+        .error-message { color: #ef4444; font-size: 0.8rem; margin-top: 0.5rem; display: none; }
+        .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .submit-btn { width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; border: none; padding: 1rem; border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-bottom: 1.5rem; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .loading { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite; margin-right: 0.5rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .login-link { text-align: center; color: #94a3b8; }
+        .login-link a { color: #60a5fa; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        .login-link a:hover { color: #93c5fd; }
+        .form-message { padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; font-weight: 500; display: none; }
+        .form-message.success { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .form-message.error { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .form-message.info { background: rgba(96, 165, 250, 0.1); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.2); }
+        @media (max-width: 768px) { .signup-container { margin: 1rem; padding: 2rem; } .name-row { grid-template-columns: 1fr; gap: 0; } }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo">
+            <h1>🚀 CodingStartup</h1>
+            <p>Join our community of learners</p>
+        </div>
+
+        <form id="signupForm">
+            <div class="form-message" id="formMessage"></div>
+
+            <div class="form-group">
+                <label for="username">Username *</label>
+                <input type="text" id="username" name="username" required minlength="3" maxlength="30" placeholder="Enter your username">
+                <div class="error-message" id="usernameError"></div>
+            </div>
+
+            <div class="name-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" maxlength="50" placeholder="First name (optional)">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" maxlength="50" placeholder="Last name (optional)">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password" id="password" name="password" required minlength="6" placeholder="Create a strong password">
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password *</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                <div class="error-message" id="confirmPasswordError"></div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="btn-text">Create Account</span>
+                <span class="loading" style="display: none;"></span>
+            </button>
+            
+            <button type="button" class="submit-btn" id="testBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-top: 10px;">
+                🧪 Test Server Connection
+            </button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="login.html">Log in</a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 15px;">
+            <a href="/" style="color: #60a5fa; text-decoration: none; font-size: 14px; display: inline-flex; align-items: center; gap: 6px;">
+                ← Back to Home
+            </a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="location.reload(true)" style="background: #64748b; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+                🔄 Force Refresh Page
+            </button>
+        </div>
+    </div>
+
+            <script src="chatbot-popup.js"></script>
+        <script>
+            // Force cache refresh
+            console.log('🔄 Signup page loaded - checking server connection...');
+            
+            // Test server connection on page load
+            fetch('/api/health')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('✅ Server health check:', data);
+                    if (data.database === 'connected') {
+                        console.log('✅ Database is connected - signup should work!');
+                    } else {
+                        console.log('❌ Database not connected');
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ Server health check failed:', error);
+                });
+        const form = document.getElementById('signupForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const loadingSpinner = submitBtn.querySelector('.loading');
+        const formMessage = document.getElementById('formMessage');
+
+        function showMessage(message, type = 'info') {
+            formMessage.textContent = message;
+            formMessage.className = `form-message ${type}`;
+            formMessage.style.display = 'block';
+            if (type === 'success') {
+                setTimeout(() => formMessage.style.display = 'none', 5000);
+            }
+        }
+
+        function setLoading(loading) {
+            if (loading) {
+                btnText.style.display = 'none';
+                loadingSpinner.style.display = 'inline-block';
+                submitBtn.disabled = true;
+            } else {
+                btnText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            formMessage.style.display = 'none';
+            
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+
+            if (!username || !email || !password || !confirmPassword) {
+                showMessage('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match.', 'error');
+                return;
+            }
+
+            try {
+                setLoading(true);
+                
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password, firstName, lastName })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ Account created successfully! Welcome email sent to your inbox.', 'success');
+                    // Don't store token yet - user needs to login first
+                    // localStorage.setItem('token', data.data.token);
+                    // localStorage.setItem('user', JSON.stringify(data.data.user));
+                    setTimeout(() => {
+                        showMessage('📧 Check your email for welcome message! Redirecting to login...', 'success');
+                        setTimeout(() => window.location.href = '/login', 2000);
+                    }, 2000);
+                } else {
+                    if (data.message.includes('Database service is currently unavailable')) {
+                        showMessage('Server is running but database is unavailable. Please contact support or try again later.', 'error');
+                    } else {
+                        showMessage(data.message, 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    showMessage('Network error: Unable to connect to server. Please check if the server is running.', 'error');
+                } else if (error.name === 'TypeError' && error.message.includes('JSON')) {
+                    showMessage('Server error: Invalid response from server. Please try again.', 'error');
+                } else {
+                    showMessage('Network error. Please try again.', 'error');
+                }
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (token) window.location.href = '/';
+            
+            // Test button functionality
+            const testBtn = document.getElementById('testBtn');
+            testBtn.addEventListener('click', async function() {
+                try {
+                    testBtn.textContent = '🔄 Testing...';
+                    testBtn.disabled = true;
+                    
+                    const response = await fetch('/api/health');
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        showMessage(`✅ Server is working! Database: ${data.database}`, 'success');
+                        console.log('Server test successful:', data);
+                    } else {
+                        showMessage('❌ Server test failed', 'error');
+                    }
+                } catch (error) {
+                    console.error('Test failed:', error);
+                    showMessage('❌ Cannot connect to server', 'error');
+                } finally {
+                    testBtn.textContent = '🧪 Test Server Connection';
+                    testBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

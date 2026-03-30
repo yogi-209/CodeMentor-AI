@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python</title>
+    <style>
+        /* CSS for parallax effect */
+        .parallax {
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax1 {
+            background-image: url("https://picsum.photos/1920/1080?random=1");
+        }
+
+        .parallax2 {
+            background-image: url("https://picsum.photos/1920/1080?random=2");
+        }
+
+        .parallax3 {
+            background-image: url("https://picsum.photos/1920/1080?random=3");
+        }
+
+        .parallax4 {
+            background-image: url("https://picsum.photos/1920/1080?random=4");
+        }
+
+        .parallax5 {
+            background-image: url("https://picsum.photos/1920/1080?random=5");
+        }
+
+        .parallax6 {
+            background-image: url("https://picsum.photos/1920/1080?random=6");
+        }
+
+        .parallax7 {
+            background-image: url("https://picsum.photos/1920/1080?random=7");
+        }
+
+        .parallax8 {
+            background-image: url("https://picsum.photos/1920/1080?random=8");
+        }
+
+        .parallax9 {
+            background-image: url("https://picsum.photos/1920/1080?random=9");
+        }
+
+        .content {
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            font-size: 18px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+        }
+
+        .content:hover {
+            transform: translateY(-5px) rotateX(2deg) rotateY(4deg) scale(1.02);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+    </style>
+    <!-- Chatbot CSS -->
+    <link rel="stylesheet" href="chatbot-popup.css">
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; text-align: center; color: white;">
+        <h1 style="margin: 0 0 15px 0;">Python Tutorial</h1>
+        <nav style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <a href="Home.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 5px; transition: background 0.3s;">Home</a>
+            <a href="c++.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 5px; transition: background 0.3s;">C++</a>
+            <a href="java.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 5px; transition: background 0.3s;">Java</a>
+            <a href="css.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 5px; transition: background 0.3s;">CSS</a>
+            <a href="playground.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 5px; transition: background 0.3s; background: rgba(255,255,255,0.2);">Code Playground</a>
+        </nav>
+    </header>
+    <div class="parallax parallax1"></div>
+    <div class="content">
+        <h2>What is Python?</h2>
+        <p>
+            <span class="italic">Python</span> is a general-purpose, dynamically typed, high-level, interpreted programming language. It emphasizes code readability and allows programmers to express concepts with fewer lines of code compared to other languages.
+        </p>
+        <p>
+            Python was conceived in the late 1980s by <b>Guido van Rossum</b>. The first version, <b>Python 0.9.0, was released in 1991</b>. Since then, Python has gained immense popularity and is widely used in various domains due to its simplicity and versatility.
+        </p>
+    </div>
+    <div class="parallax parallax2"></div>
+    <div class="content">
+        <h2>Python Features and Characteristics</h2>
+        <ul>
+            <li><b>Easy to Learn and Use:</b> Python's syntax is straightforward and emphasizes readability, making it accessible for beginners.</li>
+            <li><b>Expressive Language:</b> Python allows developers to write clear and logical code for small and large-scale projects.</li>
+            <li><b>Interpreted Language:</b> Python code is executed line by line at runtime by the interpreter.</li>
+            <li><b>Dynamic Typing:</b> Python uses dynamic typing, enabling developers to write code without declaring the type of variables.</li>
+            <li><b>Rich Standard Library:</b> Python's extensive standard library supports various tasks such as string operations, file I/O, and web programming.</li>
+            <li><b>Support for Multiple Paradigms:</b> Python supports procedural, object-oriented, and functional programming paradigms.</li>
+            <li><b>Platform Independent:</b> Python code runs unchanged on various platforms, including Windows, macOS, and Linux.</li>
+            <li><b>Vibrant Community and Ecosystem:</b> Python has a large community of developers contributing libraries, frameworks, and tools.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax3"></div>
+    <div class="content">
+        <h2>Python Data Types and Structures</h2>
+        <p>Python provides various built-in data types and structures:</p>
+        <ul>
+            <li><b>Strings:</b> Sequence of characters enclosed in quotes, used for text manipulation.</li>
+            <li><b>Numbers:</b> Integers, floating-point numbers, and complex numbers for mathematical operations.</li>
+            <li><b>Booleans:</b> True or False values used in logical operations.</li>
+            <li><b>Lists:</b> Ordered collection of items that are mutable and can contain mixed data types.</li>
+            <li><b>Tuples:</b> Immutable ordered collection of items, similar to lists but cannot be modified after creation.</li>
+            <li><b>Sets:</b> Unordered collection of unique items, useful for operations like membership testing and elimination of duplicates.</li>
+            <li><b>Dictionaries:</b> Key-value pairs that are unordered, mutable, and indexed, used for storing data in a structured manner.</li>
+            <li><b>Arrays:</b> Supported by libraries like NumPy, used for efficient numerical computations and data manipulation.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax4"></div>
+    <div class="content">
+        <h2>Python Lists, Tuples, and Sets</h2>
+        <p>Python provides versatile data structures for storing collections of data:</p>
+        <ul>
+            <li><b>Lists:</b> Ordered and mutable collections of items, defined using square brackets []. Example: <code>numbers = [1, 2, 3, 4, 5]</code>.</li>
+            <li><b>Tuples:</b> Immutable collections of items, defined using parentheses (). Example: <code>coordinates = (10, 20)</code>.</li>
+            <li><b>Sets:</b> Unordered collections of unique items, defined using curly braces {}. Example: <code>unique_numbers = {1, 2, 3, 4, 5}</code>.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax5"></div>
+    <div class="content">
+        <h2>Python Dictionaries and Arrays</h2>
+        <p>Other essential data structures in Python include dictionaries and arrays:</p>
+        <ul>
+            <li><b>Dictionaries:</b> Key-value pairs enclosed in curly braces {}, allowing fast lookups and mappings. Example: <code>person = {'name': 'John', 'age': 30}</code>.</li>
+            <li><b>Arrays:</b> Numeric arrays supported by libraries like NumPy, offering efficient storage and operations for numerical data. Example: <code>import numpy as np; arr = np.array([1, 2, 3])</code>.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax6"></div>
+    <div class="content">
+        <h2>Python Type Casting</h2>
+        <p>Type casting in Python allows conversion between different data types:</p>
+        <ul>
+            <li><b>Implicit Type Conversion:</b> Automatic conversion performed by Python based on the context. Example: <code>x = 10 + 5.5</code>.</li>
+            <li><b>Explicit Type Conversion:</b> Manual conversion using built-in functions like <code>int()</code>, <code>float()</code>, and <code>str()</code>. Example: <code>age = int("25")</code>.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax7"></div>
+    <div class="content">
+        <h2>Python Functions</h2>
+        <p>Functions in Python are defined using the <code>def</code> keyword and can have parameters and return values:</p>
+        <pre><code>def greet(name):
+    return f"Hello, {name}!"
+
+message = greet("Alice")
+print(message)</code></pre>
+        <p>This defines a simple function <code>greet</code> that takes a name as an argument and returns a greeting message.</p>
+    </div>
+    <div class="parallax parallax8"></div>
+    <div class="content">
+        <h2>Python Modules and Packages</h2>
+        <p>Python supports modular programming through modules and packages:</p>
+        <ul>
+            <li><b>Modules:</b> Files containing Python code, which can be imported and used in other Python scripts. Example: <code>import math; print(math.sqrt(16))</code>.</li>
+            <li><b>Packages:</b> Collections of modules organized in directories. Packages allow structuring a Python project into multiple modules. Example: <code>import numpy as np; arr = np.array([1, 2, 3])</code>.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax9"></div>
+    <div class="content">
+        <h2>Python Object-Oriented Programming</h2>
+        <p>Python supports object-oriented programming (OOP) with classes and objects:</p>
+        <pre><code>class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def greet(self):
+        return f"Hello, my name is {self.name} and I am {self.age} years old."
+
+person = Person("Alice", 30)
+print(person.greet())</code></pre>
+        <p>This defines a class <code>Person</code> with attributes <code>name</code> and <code>age</code>, and a method <code>greet</code> to introduce the person.</p>
+    </div>
+
+    <!-- Chatbot JavaScript -->
+    <script src="chatbot-popup.js"></script>
+</body>
+</html>

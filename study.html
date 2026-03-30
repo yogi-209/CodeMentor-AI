@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Effect</title>
+    <style>
+        /* CSS for parallax effect */
+        .parallax1, .parallax2, .parallax3, .parallax4, .parallax5 {
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+ 
+        .parallax1 {
+            background-image: url("   https://picsum.photos//1920/1080?random=1&text");
+        }
+
+        .parallax2 {
+            background-image: url(" https://picsum.photos//1920/1080?random=10&text  ");
+        }
+
+        .parallax3 {
+            background-image: url("  https://picsum.photos//1920/1080?random=12&text");
+        }
+
+        .parallax4 {
+            background-image: url("  https://picsum.photos/1920/1080?random=2&text");
+        }
+
+        .parallax5 {
+            background-image: url("  https://picsum.photos/1920/1080?random=3&text");
+        }
+
+        .parallax6 {
+            background-image: url("  https://picsum.photos/1920/1080?random=4&text");
+        }
+
+        /* Styling for text sections */
+        .content {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        h1, h2, h4 {
+            font-family: 'Arial', sans-serif;
+        }
+
+        p, ul {
+            font-family: 'Verdana', sans-serif;
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        .btn {
+  background-color: rgb(16, 76, 217);
+  color: whitesmoke;
+  padding: 14px 30px;
+  font-size: 35px;
+  text-align: center;
+  border: 2px solid blue;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 15%;
+  display: inline-block;
+ text-shadow:  2px 2px 4px #000000;
+ box-shadow: 10px 10px lightblue;
+ /*position: relative;*/
+ animation-name: example;
+  animation-duration: 4s;
+}
+@keyframes example {
+  0%   {background-color:rgb(23, 104, 218); left:0px; top:0px;}
+  25%  {background-color:rgb(30, 61, 214); left:200px; top:0px;}
+  50%  {background-color:blue; left:200px; top:200px;}
+  75%  {background-color:rgb(25, 18, 166); left:0px; top:200px;}
+  100% {background-color:rgb(56, 12, 166); left:0px; top:0px;}
+}
+.btn{
+    transition-duration: 0.4s;
+}
+.btn:hover{
+    
+    background-color: rgb(34, 4, 179);
+    color:white;
+    box-shadow: 0 8px 12px 0 rgba(33, 3, 169, 0.966), 0 17px 50px 0 rgba(30, 5, 221, 0.993);
+}
+    </style>
+    <!-- Chatbot CSS -->
+    <link rel="stylesheet" href="chatbot-popup.css">
+</head>
+<body>
+    <div class="parallax1"></div>
+    <div class="content">
+        <h1>Welcome to Our Website!</h1>
+        <p>We're here to help you study effectively.</p>
+
+        <h2>Explore Our Resources</h2>
+        <ul>
+            <li><strong>Courses:</strong> Wide range of topics.</li>
+            <li><strong>Articles & Tutorials:</strong> In-depth knowledge.</li>
+            <li><strong>Videos & Webinars:</strong> Learn from experts.</li>
+        </ul>
+
+        <h2>Personalize Your Learning</h2>
+        <ul>
+            <li><strong>Create a Profile:</strong> Track your progress.</li>
+            <li><strong>Set Goals:</strong> Stay motivated.</li>
+            <li><strong>Join Study Groups:</strong> Collaborate with peers.</li>
+        </ul>
+
+        <h2>Get Support</h2>
+        <ul>
+            <li><strong>Ask Questions:</strong> Use forums and discussion boards.</li>
+            <li><strong>Contact Us:</strong> Get assistance when needed.</li>
+        </ul>
+
+        <h2>Stay Updated</h2>
+        <ul>
+            <li><strong>Newsletter:</strong> Get the latest updates.</li>
+            <li><strong>Blog:</strong> Follow trends and tips.</li>
+        </ul>
+
+        <p>Dive in and start learning! If you need help, we're here for you. Happy studying!</p>
+    </div>
+
+    <div class="parallax2"></div>
+    <div class="content">
+        <h4>
+            <ul>
+                <a href="c++.html"><h2><button class="btn"><b>C++</b> </button></h2></a>
+            </ul>
+            <p>C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language. It provides high-level programming features like classes, templates, and inheritance, making it suitable for both system and application development. C++ is widely used in game development, operating systems, and performance-critical applications.</p>
+        </h4>
+    </div>
+
+    <div class="parallax4"></div>
+    <div class="content">
+        <h4>
+            <ul>
+                <a href="java.html"><h2><button class="btn"><b>JAVA</b> </button></h2></a>
+            </ul>
+            <p>Java is a high-level programming language developed by James Gosling at Sun Microsystems (which has since been acquired by Oracle). It is known for its platform independence, meaning Java programs can run on any device that has a Java Virtual Machine (JVM). Java is widely used in web development, enterprise software, and mobile app development (Android).</p>
+        </h4>
+    </div>
+
+    <div class="parallax5"></div>
+    <div class="content">
+        <h4>
+            <ul>
+                <a href="python.html"><h2><button class="btn"><b>PYTHON</b> </button></h2></a>
+            </ul>
+            <p>Python is an interpreted, high-level, general-purpose programming language created by Guido van Rossum and first released in 1991. It emphasizes code readability and simplicity, making it suitable for beginners and experienced programmers alike. Python is widely used in web development, data analysis, artificial intelligence, and scientific computing.</p>
+        </h4>
+    </div>
+
+    <!-- Chatbot JavaScript -->
+    <script src="chatbot-popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C++ Tutorial</title>
+    <style>
+        /* CSS for parallax effect */
+        .parallax {
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax1 {
+            background-image: url("  https://picsum.photos//1920/1080?random=10&text");
+        }
+
+        .parallax2 {
+            background-image: url(" https://www.interviewbit.com/blog/wp-content/uploads/2022/01/Features-of-C-2048x997.png");
+        }
+ 
+        .parallax3 {
+            background-image: url("  https://picsum.photos/1920/1080?random=3&text");
+        }
+
+        .parallax4 {
+            background-image: url("  https://picsum.photos/1920/1080?random=4&text");
+        }
+
+        .parallax5 {
+            background-image: url("  https://picsum.photos/1920/1080?random=5&text");
+        }
+
+        .parallax6 {
+            background-image: url("  https://picsum.photos/1920/1080?random=6&text");
+        }
+
+        .parallax7 {
+            background-image: url("  https://picsum.photos/1920/1080?random=7&text");
+        }
+
+        .parallax8 {
+            background-image: url("  https://picsum.photos/1920/1080?random=8&text");
+        }
+
+        .parallax9 {
+            background-image: url("  https://picsum.photos/1920/1080?random=9&text");
+        }
+
+        /* Styling for content sections */
+        .content {
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            font-size: 18px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        ol {
+            margin-left: 20px;
+        }
+
+        ol li {
+            margin: 10px 0;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+    </style>
+    <!-- Chatbot CSS -->
+    <link rel="stylesheet" href="chatbot-popup.css">
+</head>
+<body>
+    <div class="parallax parallax1"></div>
+    <div class="content">
+        <h2>What is C++?</h2>
+        <p>
+            C++ is a general-purpose programming language widely used for competitive programming. It features imperative, object-oriented, and generic programming capabilities. C++ runs on multiple platforms like Windows, Linux, Unix, and Mac. It is efficient and powerful, commonly used in GUI platforms, 3D graphics, and real-time simulations.
+        </p>
+        <p>
+            Here's a simple "Hello World" program in C++:
+            <pre><code>#include&lt;iostream&gt;
+using namespace std;
+int main()
+{
+    cout << "Hello World";
+    return 0;
+}</code></pre>
+            C++ is an Object-Oriented Programming Language.
+        </p>
+    </div>
+    <div class="parallax parallax2"></div>
+    <div class="content">
+        <h2>Main Pillars of Object-Oriented Programming</h2>
+        <ol>
+            <li>Objects and Classes</li>
+            <li>Inheritance</li>
+            <li>Polymorphism</li>
+            <li>Abstraction</li>
+            <li>Encapsulation</li>
+        </ol>
+    </div>
+    <div class="parallax parallax3"></div>
+    <div class="content">
+        <h2>Objects and Classes</h2>
+        <p>
+            Object-oriented programming uses objects in programming, aiming to implement real-world entities like inheritance, hiding, and polymorphism. The main goal is to bind data and functions together, ensuring that no other part of the code can access this data except for the associated function.
+        </p>
+        <p>
+            In C++, classes act as blueprints for creating objects. An object is an instance of a class, encapsulating data and methods (functions) that operate on the data. For example:
+            <pre><code class="language-cpp">class Car {
+public:
+    string brand;
+    string model;
+    int year;
+    
+    void displayInfo() {
+        cout << "Car: " << brand << " " << model << " (" << year << ")" << endl;
+    }
+};
+
+int main() {
+    Car myCar;
+    myCar.brand = "Toyota";
+    myCar.model = "Corolla";
+    myCar.year = 2022;
+    myCar.displayInfo();
+    return 0;
+}</code></pre>
+            Here, <code>Car</code> is a class with attributes <code>brand</code>, <code>model</code>, and <code>year</code>, and a method <code>displayInfo()</code> to display car details.
+        </p>
+    </div>
+    <div class="parallax parallax4"></div>
+    <div class="content">
+        <h2>Inheritance</h2>
+        <p>
+            Inheritance is a fundamental feature of OOP where a class (subclass or derived class) can inherit properties and behavior (methods) from another class (superclass or base class). This promotes code reusability and supports the "is-a" relationship. Example:
+        </p>
+        <pre><code class="language-cpp">class Animal {
+public:
+    void makeSound() {
+        cout << "Animal makes a sound" << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void makeSound() {
+        cout << "Dog barks" << endl;
+    }
+};
+
+int main() {
+    Dog myDog;
+    myDog.makeSound(); // Output: Dog barks
+    return 0;
+}</code></pre>
+        <p>
+            Here, <code>Dog</code> inherits from <code>Animal</code>, and <code>makeSound()</code> is overridden to specify a dog's bark.
+        </p>
+    </div>
+    <div class="parallax parallax5"></div>
+    <div class="content">
+        <h2>Polymorphism</h2>
+        <p>
+            Polymorphism allows objects of different classes to be treated as objects of a common parent class. This promotes flexibility and reusability in code. There are two types of polymorphism in C++: compile-time (function overloading) and runtime (function overriding).
+        </p>
+        <pre><code class="language-cpp">class Shape {
+public:
+    virtual void draw() {
+        cout << "Drawing a shape" << endl;
+    }
+};
+
+class Circle : public Shape {
+public:
+    void draw() override {
+        cout << "Drawing a circle" << endl;
+    }
+};
+
+int main() {
+    Shape* shape = new Circle();
+    shape->draw(); // Output: Drawing a circle
+    delete shape;
+    return 0;
+}</code></pre>
+        <p>
+            Here, <code>Shape</code> is a base class with a virtual method <code>draw()</code>, and <code>Circle</code> is a derived class overriding <code>draw()</code> to draw a circle.
+        </p>
+    </div>
+    <div class="parallax parallax6"></div>
+    <div class="content">
+        <h2>Abstraction</h2>
+        <p>
+            Abstraction focuses on hiding complex implementation details and showing only the necessary features of an object. It allows programmers to work with high-level ideas rather than low-level details.
+        </p>
+        <pre><code class="language-cpp">class Animal {
+public:
+    virtual void makeSound() = 0; // Pure virtual function
+};
+
+class Dog : public Animal {
+public:
+    void makeSound() override {
+        cout << "Dog barks" << endl;
+    }
+};
+
+int main() {
+    Animal* animal = new Dog();
+    animal->makeSound(); // Output: Dog barks
+    delete animal;
+    return 0;
+}</code></pre>
+        <p>
+            Here, <code>Animal</code> is an abstract class with a pure virtual function <code>makeSound()</code>. <code>Dog</code> inherits from <code>Animal</code> and implements <code>makeSound()</code>.
+        </p>
+    </div>
+    <div class="parallax parallax7"></div>
+    <div class="content">
+        <h2>Encapsulation</h2>
+        <p>
+            Encapsulation bundles data (attributes) and methods (functions) into a single unit called a class. It protects data from unauthorized access and modification by providing public interfaces (methods) for interaction.
+        </p>
+        <pre><code class="language-cpp">class Employee {
+private:
+    string name;
+    int age;
+    double salary;
+
+public:
+    // Constructor
+    Employee(string n, int a, double s) : name(n), age(a), salary(s) {}
+
+    // Getter methods
+    string getName() {
+        return name;
+    }
+
+    int getAge() {
+        return age;
+    }
+
+    double getSalary() {
+        return salary;
+    }
+
+    // Setter methods
+    void setName(string n) {
+        name = n;
+    }
+
+    void setAge(int a) {
+        age = a;
+    }
+
+    void setSalary(double s) {
+        salary = s;
+    }
+
+    void displayInfo() {
+        cout << "Employee: " << name << ", Age: " << age << ", Salary: " << salary << endl;
+    }
+};
+
+int main() {
+    Employee emp("John Doe", 30, 50000);
+    emp.displayInfo();
+    emp.setAge(31);
+    emp.setSalary(55000);
+    emp.displayInfo();
+    return 0;
+}</code></pre>
+        <p>
+            Here, <code>Employee</code> is a class with private attributes <code>name</code>, <code>age</code>, and <code>salary</code>. Public getter and setter methods provide controlled access to these attributes.
+        </p>
+    </div>
+
+    <script>
+        // Function to move content div up on click for demonstration
+        function moveContent(element) {
+            element.style.position = 'relative';
+            element.style.top = "-20px";
+        }
+    </script>
+    
+    <!-- Chatbot JavaScript -->
+    <script src="chatbot-popup.js"></script>
+</body>
+</html>

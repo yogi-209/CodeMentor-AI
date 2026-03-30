@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Chatbot Test</title>
+    <link rel="stylesheet" href="fixed-chatbot.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+            margin: 0;
+        }
+        .test-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .feature-item h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .test-cases {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .test-cases h4 {
+            margin-top: 0;
+            color: #2d5a2d;
+        }
+        .test-cases ul {
+            margin: 10px 0;
+        }
+        .test-cases li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h1>🤖 Fixed Chatbot Test</h1>
+        <p>This page demonstrates the fixed chatbot implementation that properly handles API calls through a backend service.</p>
+        
+        <h3>✅ What's Fixed:</h3>
+        <div class="feature-list">
+            <div class="feature-item">
+                <h4>🔒 Secure API Calls</h4>
+                <p>API keys are hidden in the backend, not exposed in client-side code</p>
+            </div>
+            <div class="feature-item">
+                <h4>🌐 CORS Issues Resolved</h4>
+                <p>Backend handles all API calls, eliminating CORS restrictions</p>
+            </div>
+            <div class="feature-item">
+                <h4>🛡️ Robust Error Handling</h4>
+                <p>Proper error handling for unexpected API response formats</p>
+            </div>
+            <div class="feature-item">
+                <h4>🎨 Code Formatting</h4>
+                <p>Proper syntax highlighting for code examples in multiple languages</p>
+            </div>
+            <div class="feature-item">
+                <h4>🧪 Mock Responses</h4>
+                <p>Fallback to mock responses when API is unavailable</p>
+            </div>
+            <div class="feature-item">
+                <h4>⚡ Typing Indicators</h4>
+                <p>Smooth typing animations and loading states</p>
+            </div>
+        </div>
+
+        <div class="test-cases">
+            <h4>🧪 Test Cases - Try These Messages:</h4>
+            <ul>
+                <li><strong>"Hello"</strong> - Basic greeting</li>
+                <li><strong>"How do I write a Python function?"</strong> - Programming help</li>
+                <li><strong>"My JavaScript code has an error"</strong> - Debugging assistance</li>
+                <li><strong>"Explain recursion"</strong> - Algorithm explanation</li>
+                <li><strong>"Show me C++ code for sorting"</strong> - Code examples</li>
+                <li><strong>"What's the difference between let and var?"</strong> - Language concepts</li>
+            </ul>
+        </div>
+
+        <h3>🔧 Technical Implementation:</h3>
+        <ul>
+            <li><strong>Backend API:</strong> <code>/api/ai/chat</code> endpoint handles all AI requests</li>
+            <li><strong>Frontend:</strong> Makes secure calls to backend, no direct API access</li>
+            <li><strong>Error Handling:</strong> Graceful fallback to mock responses</li>
+            <li><strong>Code Formatting:</strong> Automatic syntax highlighting for code blocks</li>
+            <li><strong>Response Structure:</strong> Handles various API response formats</li>
+        </ul>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="test-button" onclick="testChatbot()">Test Chatbot</button>
+            <a href="/api/ai/status" class="test-button" target="_blank">Check API Status</a>
+            <a href="/" class="test-button">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        function testChatbot() {
+            // Open the chatbot
+            const toggle = document.getElementById('fixed-chatbot-toggle');
+            if (toggle) {
+                toggle.click();
+            } else {
+                alert('Chatbot not found. Make sure the fixed-chatbot.js is loaded.');
+            }
+        }
+
+        // Test API status on page load
+        async function checkAPIStatus() {
+            try {
+                const response = await fetch('/api/ai/status');
+                const data = await response.json();
+                
+                if (data.success) {
+                    console.log('✅ API Status:', data.data.message);
+                    if (data.data.apiStatus === 'mock') {
+                        console.log('ℹ️ Using mock responses (API not available)');
+                    }
+                }
+            } catch (error) {
+                console.error('❌ API Status check failed:', error);
+            }
+        }
+
+        // Check API status when page loads
+        document.addEventListener('DOMContentLoaded', checkAPIStatus);
+    </script>
+    
+    <script src="fixed-chatbot.js"></script>
+</body>
+</html>

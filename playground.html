@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Compiler - CodingStartup</title>
+    
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css">
+    
+    <!-- Chatbot CSS -->
+    <link rel="stylesheet" href="chatbot-popup.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Editor Panel */
+        .editor-panel {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .editor-header {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .language-selector {
+            background: rgba(51, 65, 85, 0.8);
+            color: #e2e8f0;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-selector:hover {
+            border-color: #60a5fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-left: auto;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.secondary {
+            background: rgba(71, 85, 105, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .btn.secondary:hover {
+            background: rgba(71, 85, 105, 1);
+            border-color: #60a5fa;
+        }
+
+        .btn.clear {
+            background: rgba(239, 68, 68, 0.8);
+        }
+
+        .btn.clear:hover {
+            background: rgba(239, 68, 68, 1);
+        }
+
+        /* CodeMirror Customization */
+        .CodeMirror {
+            height: 500px;
+            font-size: 14px;
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            cursor: text;
+        }
+        
+        .CodeMirror-cursor {
+            border-left: 2px solid #60a5fa;
+            border-right: none;
+            width: 0;
+        }
+        
+        .CodeMirror-focused .CodeMirror-cursor {
+            border-left: 2px solid #fbbf24;
+        }
+
+        .CodeMirror-gutters {
+            background: rgba(30, 41, 59, 0.9);
+            border-right: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .CodeMirror-linenumber {
+            color: #64748b;
+        }
+
+        /* Input Panel */
+        .input-panel {
+            background: rgba(30, 41, 59, 0.9);
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1rem 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+        }
+
+        /* Console Panel */
+        .console-panel {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .console-header {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .console-title {
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .console-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            background: rgba(51, 65, 85, 0.8);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(51, 65, 85, 1);
+            color: #e2e8f0;
+        }
+
+        .console-content {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        .console-pane {
+            display: none;
+        }
+
+        .console-pane.active {
+            display: block;
+        }
+
+        .output-content {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: #10b981;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .ai-content {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: #93c5fd;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(96, 165, 250, 0.3);
+            border-radius: 50%;
+            border-top-color: #60a5fa;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .console-panel {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .editor-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+            }
+            
+            .action-buttons {
+                margin-left: 0;
+                justify-content: center;
+            }
+            
+            .CodeMirror {
+                height: 400px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.5);
+        }
+
+        /* Status Messages */
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .status.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .status.info {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="home.html" class="logo">🚀 CodingStartup</a>
+            <nav class="nav-links">
+                <a href="home.html">Home</a>
+                <a href="login.html">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Editor Panel -->
+        <div class="editor-panel">
+            <div class="editor-header">
+                <select class="language-selector" id="languageSelector">
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                    <option value="c">C</option>
+                    <option value="go">Go</option>
+                    <option value="rust">Rust</option>
+                    <option value="php">PHP</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="swift">Swift</option>
+                    <option value="kotlin">Kotlin</option>
+                    <option value="typescript">TypeScript</option>
+                </select>
+                
+                <div class="action-buttons">
+                    <button class="btn" id="runBtn">
+                        <span class="btn-text">▶ Run Code</span>
+                        <span class="loading" style="display: none;"></span>
+                    </button>
+                    <button class="btn secondary" id="explainBtn">🤖 Explain</button>
+                    <button class="btn secondary" id="convertBtn">🔄 Convert</button>
+                    <button class="btn clear" id="clearBtn">🗑️ Clear</button>
+                    <button class="btn secondary" id="clearAllBtn" style="font-size: 0.8rem;">🗑️ Clear All</button>
+                    <button class="btn secondary" id="refreshBtn" style="font-size: 0.8rem;">🔄 Refresh</button>
+                    <span id="saveIndicator" style="display: none; color: #10b981; font-size: 0.8rem; margin-left: 10px;">💾 Saved</span>
+                    <span id="executionIndicator" style="display: none; color: #fbbf24; font-size: 0.8rem; margin-left: 10px;">⚡ Executing...</span>
+                </div>
+            </div>
+
+            <div id="codeEditor">
+                <div id="editorLoading" style="display: flex; align-items: center; justify-content: center; height: 500px; color: #94a3b8;">
+                    <div style="text-align: center;">
+                        <div class="loading" style="margin: 0 auto 1rem;"></div>
+                        <div>Loading Code Editor...</div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: #64748b;">
+                            If the editor doesn't load, please refresh the page
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-panel">
+                <label class="input-label" for="inputField">Input (Optional):</label>
+                <textarea 
+                    id="inputField" 
+                    class="input-field" 
+                    placeholder="Enter input for your program here..."
+                ></textarea>
+            </div>
+        </div>
+
+        <!-- Console Panel -->
+        <div class="console-panel">
+            <div class="console-header">
+                <span class="console-title">Console</span>
+                <div class="console-tabs">
+                    <button class="tab-btn active" data-tab="output">Output</button>
+                    <button class="tab-btn" data-tab="ai">AI Response</button>
+                </div>
+            </div>
+            
+            <div class="console-content">
+                <div id="outputPane" class="console-pane active">
+                                        <div id="outputContent" class="output-content">
+                        Welcome to Code Compiler! 👋
+                        
+Select a language and write your code, then click Run to execute it.
+
+✨ Now supports real code execution for C++, Python, Java, C, Go, Rust, PHP, Ruby, Swift, and TypeScript using the free Judge0 CE API!
+                    </div>
+                </div>
+                
+                <div id="aiPane" class="console-pane">
+                    <div id="aiContent" class="ai-content">
+                        AI responses will appear here when you use Explain or Convert features.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CodeMirror Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/go/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/rust/rust.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/php/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/swift/swift.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/selection/active-line.min.js"></script>
+
+
+    <!-- Authentication Script -->
+    <script src="js/auth.js"></script>
+    
+    <!-- Chatbot Script -->
+    <script src="chatbot-popup.js"></script>
+
+    <script>
+        // Configuration
+        const JUDGE0_API = 'https://judge0-ce.p.rapidapi.com';
+        const RAPIDAPI_KEY = 'YOUR_RAPIDAPI_KEY'; // Replace with your key
+        const GEMINI_API_KEY = 'AIzaSyDMfOau3KqCvjlfi4DEMK06dhjoC0aqAcs';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+        
+        // Free Judge0 CE API (no key required)
+        const JUDGE0_CE_API = 'https://ce.judge0.com';
+
+        // Language configurations with Judge0 language IDs
+        const LANGUAGE_CONFIGS = {
+            javascript: { mode: 'javascript', template: 'console.log("Hello, World!");', judge0Id: 63 },
+            python: { mode: 'python', template: 'print("Hello, World!")', judge0Id: 71 },
+            java: { mode: 'text/x-java', template: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}', judge0Id: 62 },
+            cpp: { mode: 'text/x-c++src', template: '#include <iostream>\n#include <vector>\n\nint main() {\n    std::cout << "Hello, World!" << std::endl;\n    \n    // Example with modern C++\n    std::vector<int> numbers = {1, 2, 3, 4, 5};\n    for (int num : numbers) {\n        std::cout << "Number: " << num << std::endl;\n    }\n    \n    return 0;\n}', judge0Id: 54 },
+            c: { mode: 'text/x-csrc', template: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}', judge0Id: 50 },
+            go: { mode: 'go', template: 'package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Hello, World!")\n}', judge0Id: 60 },
+            rust: { mode: 'rust', template: 'fn main() {\n    println!("Hello, World!");\n}', judge0Id: 73 },
+            php: { mode: 'application/x-httpd-php', template: '<?php\necho "Hello, World!";\n?>', judge0Id: 68 },
+            ruby: { mode: 'ruby', template: 'puts "Hello, World!"', judge0Id: 72 },
+            swift: { mode: 'swift', template: 'print("Hello, World!")', judge0Id: 83 },
+            typescript: { mode: 'javascript', template: 'console.log("Hello, World!");', judge0Id: 74 }
+        };
+
+        // Initialize CodeMirror
+        let editor;
+        let currentLanguage = 'javascript';
+
+        function initEditor() {
+            console.log('Initializing editor...');
+            
+            // Clear the loading content first
+            const editorElement = document.getElementById('codeEditor');
+            if (editorElement) {
+                // Remove loading content
+                editorElement.innerHTML = '';
+                
+                try {
+                    // Get saved code or use default template
+                    const savedCode = localStorage.getItem(`code_${currentLanguage}`) || LANGUAGE_CONFIGS.javascript.template;
+                    
+                    // Create a minimal, stable configuration
+                    editor = CodeMirror(editorElement, {
+                        value: savedCode,
+                        mode: 'javascript',
+                        theme: 'material-darker',
+                        lineNumbers: true,
+                        styleActiveLine: true,
+                        matchBrackets: true,
+                        tabSize: 2,
+                        indentUnit: 2,
+                        lineWrapping: true,
+                        gutters: ['CodeMirror-linenumbers'],
+                        extraKeys: {
+                            'Tab': function(cm) {
+                                if (cm.somethingSelected()) {
+                                    cm.indentSelection('add');
+                                } else {
+                                    cm.replaceSelection('  ', 'end');
+                                }
+                            }
+                        }
+                    });
+
+                    console.log('CodeMirror instance created:', editor);
+                    
+                    // Set initial size and focus
+                    editor.setSize('100%', '500px');
+                    
+                    // Add change event listener to save code to localStorage
+                    editor.on('change', function() {
+                        const currentCode = editor.getValue();
+                        localStorage.setItem(`code_${currentLanguage}`, currentCode);
+                        
+                        // Show save indicator briefly
+                        const saveIndicator = document.getElementById('saveIndicator');
+                        if (saveIndicator) {
+                            saveIndicator.style.display = 'inline';
+                            setTimeout(() => {
+                                saveIndicator.style.display = 'none';
+                            }, 1000);
+                        }
+                    });
+                    
+                    // Wait a bit before focusing to ensure everything is ready
+                    setTimeout(() => {
+                        editor.focus();
+                        editor.refresh();
+                        console.log('Editor focused and refreshed');
+                        
+                        // Show success message
+                        showOutput('Code editor ready! Your code is automatically saved.', 'success');
+                    }, 200);
+                    
+                } catch (error) {
+                    console.error('Error creating CodeMirror instance:', error);
+                    showOutput('Error initializing editor: ' + error.message, 'error');
+                    
+                    // Fallback to simple textarea
+                    createFallbackEditor();
+                }
+            } else {
+                console.error('Editor element not found');
+            }
+        }
+        
+        function createFallbackEditor() {
+            const editorElement = document.getElementById('codeEditor');
+            if (editorElement) {
+                // Get saved code or use default template
+                const savedCode = localStorage.getItem(`code_${currentLanguage}`) || LANGUAGE_CONFIGS.javascript.template;
+                
+                editorElement.innerHTML = `
+                    <textarea 
+                        id="fallbackEditor" 
+                        style="width: 100%; height: 500px; background: #1e293b; color: #e2e8f0; border: 1px solid #475569; padding: 1rem; font-family: monospace; font-size: 14px; resize: none;"
+                        placeholder="CodeMirror failed to load. Using fallback editor. You can still write and run JavaScript code here."
+                    >${savedCode}</textarea>
+                `;
+                
+                // Create a simple fallback editor object with localStorage support
+                const textarea = document.getElementById('fallbackEditor');
+                textarea.addEventListener('input', function() {
+                    localStorage.setItem(`code_${currentLanguage}`, this.value);
+                });
+                
+                editor = {
+                    getValue: () => document.getElementById('fallbackEditor').value,
+                    setValue: (value) => document.getElementById('fallbackEditor').value = value,
+                    setOption: () => {},
+                    refresh: () => {},
+                    focus: () => document.getElementById('fallbackEditor').focus()
+                };
+                
+                showOutput('Using fallback editor. Some features may be limited.', 'info');
+            }
+        }
+
+        // Language change handler
+        function changeLanguage() {
+            const newLang = document.getElementById('languageSelector').value;
+            if (newLang !== currentLanguage && editor) {
+                // Save current code before changing language
+                const currentCode = editor.getValue();
+                localStorage.setItem(`code_${currentLanguage}`, currentCode);
+                
+                currentLanguage = newLang;
+                const config = LANGUAGE_CONFIGS[newLang];
+                
+                // Update editor mode
+                editor.setOption('mode', config.mode);
+                
+                // Load saved code for new language or use template if none exists
+                const savedCode = localStorage.getItem(`code_${newLang}`);
+                if (savedCode) {
+                    editor.setValue(savedCode);
+                } else {
+                    // Only set template if no saved code exists
+                    editor.setValue(config.template);
+                }
+                
+                // Update input field placeholder
+                const inputField = document.getElementById('inputField');
+                if (newLang === 'javascript' || newLang === 'typescript') {
+                    inputField.placeholder = 'Enter input for your program (accessible via "input" variable)...';
+                } else {
+                    inputField.placeholder = 'Enter input for your program here...';
+                }
+                
+                // Refresh editor after mode change
+                setTimeout(() => editor.refresh(), 50);
+            }
+        }
+
+        // Console tab switching
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const panes = document.querySelectorAll('.console-pane');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+                    
+                    // Update active tab button
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Update active pane
+                    panes.forEach(pane => pane.classList.remove('active'));
+                    document.getElementById(targetTab + 'Pane').classList.add('active');
+                });
+            });
+        }
+
+        // Run code
+        async function runCode() {
+            if (!editor) {
+                showOutput('Editor not ready. Please wait a moment and try again.', 'error');
+                return;
+            }
+            
+            const code = editor.getValue();
+            const input = document.getElementById('inputField').value;
+            
+            if (!code.trim()) {
+                showOutput('Please write some code first!', 'error');
+                return;
+            }
+
+            setLoading(true);
+            showOutput('Running your code...', 'info');
+
+            try {
+                if (currentLanguage === 'javascript' || currentLanguage === 'typescript') {
+                    // Run JavaScript locally
+                    await runJavaScript(code, input);
+                } else {
+                    // Run other languages via Judge0 API
+                    await runWithJudge0(code, input);
+                }
+            } catch (error) {
+                showOutput(`Error: ${error.message}`, 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Run JavaScript locally
+        async function runJavaScript(code, input) {
+            try {
+                // Create a safe execution environment
+                const sandbox = {
+                    console: {
+                        log: (...args) => outputBuffer.push(args.join(' ')),
+                        error: (...args) => errorBuffer.push(args.join(' ')),
+                        warn: (...args) => outputBuffer.push('WARN: ' + args.join(' '))
+                    },
+                    input: input,
+                    setTimeout: () => {},
+                    setInterval: () => {},
+                    clearTimeout: () => {},
+                    clearInterval: () => {}
+                };
+
+                const outputBuffer = [];
+                const errorBuffer = [];
+
+                // Execute the code
+                const func = new Function('input', 'console', code);
+                const result = func(input, sandbox.console);
+
+                // Build output
+                let output = '';
+                if (outputBuffer.length > 0) {
+                    output += outputBuffer.join('\n') + '\n';
+                }
+                if (result !== undefined) {
+                    output += `Return value: ${result}`;
+                }
+
+                if (errorBuffer.length > 0) {
+                    showOutput(`Errors:\n${errorBuffer.join('\n')}\n\nOutput:\n${output}`, 'error');
+                } else {
+                    showOutput(output || 'Code executed successfully!', 'success');
+                }
+            } catch (error) {
+                showOutput(`JavaScript Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Run with Judge0 CE API (free, no key required)
+        async function runWithJudge0(code, input) {
+            try {
+                const config = LANGUAGE_CONFIGS[currentLanguage];
+                if (!config.judge0Id) {
+                    throw new Error(`Language ${currentLanguage} not supported for execution`);
+                }
+
+                showOutput(`🔄 Submitting ${currentLanguage} code to Judge0 CE...`, 'info');
+                showExecutionStatus('Submitting...');
+
+                // Submit code for execution
+                const submitResponse = await fetch(`${JUDGE0_CE_API}/submissions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        language_id: config.judge0Id,
+                        source_code: code,
+                        stdin: input || ''
+                    })
+                });
+
+                if (!submitResponse.ok) {
+                    throw new Error(`Failed to submit code: ${submitResponse.statusText}`);
+                }
+
+                const submission = await submitResponse.json();
+                const token = submission.token;
+
+                if (!token) {
+                    throw new Error('No submission token received');
+                }
+
+                showOutput(`⏳ Code submitted! Waiting for execution results...`, 'info');
+                showExecutionStatus('Executing...');
+
+                // Poll for results
+                let attempts = 0;
+                const maxAttempts = 30; // 30 seconds max
+                
+                const pollResults = async () => {
+                    attempts++;
+                    
+                    try {
+                        const resultResponse = await fetch(`${JUDGE0_CE_API}/submissions/${token}`);
+                        
+                        if (!resultResponse.ok) {
+                            throw new Error(`Failed to get results: ${resultResponse.statusText}`);
+                        }
+
+                        const result = await resultResponse.json();
+                        
+                        if (result.status && result.status.id > 2) { // Status > 2 means processing is complete
+                            // Display results
+                            let output = '';
+                            
+                            if (result.stdout) {
+                                output += `Output:\n${result.stdout}\n\n`;
+                            }
+                            
+                            if (result.stderr) {
+                                output += `Errors:\n${result.stderr}\n\n`;
+                            }
+                            
+                            if (result.compile_output) {
+                                output += `Compilation:\n${result.compile_output}\n\n`;
+                            }
+                            
+                            if (result.message) {
+                                output += `Message: ${result.message}\n\n`;
+                            }
+                            
+                            if (result.time) {
+                                output += `Execution time: ${result.time}s\n`;
+                            }
+                            
+                            if (result.memory) {
+                                output += `Memory used: ${result.memory}KB`;
+                            }
+                            
+                            if (output.trim()) {
+                                showOutput(output, result.stderr ? 'error' : 'success');
+                            } else {
+                                showOutput('Code executed successfully!', 'success');
+                            }
+                            
+                            return; // Exit polling
+                        }
+                        
+                        // Still processing, wait and try again
+                        if (attempts < maxAttempts) {
+                            setTimeout(pollResults, 1000);
+                        } else {
+                            throw new Error('Execution timed out after 30 seconds');
+                        }
+                        
+                    } catch (error) {
+                        if (attempts < maxAttempts) {
+                            setTimeout(pollResults, 1000);
+                        } else {
+                            throw error;
+                        }
+                    }
+                };
+                
+                // Start polling
+                pollResults();
+                
+            } catch (error) {
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    throw new Error('Network error: Please check your internet connection');
+                }
+                throw new Error(`Execution failed: ${error.message}`);
+            }
+        }
+
+
+
+        // Explain code with AI
+        async function explainCode() {
+            if (!editor) {
+                showAI('Editor not ready. Please wait a moment and try again.');
+                return;
+            }
+            
+            const code = editor.getValue();
+            if (!code.trim()) {
+                showAI('Please write some code first!');
+                return;
+            }
+
+            showAI('🤔 Analyzing your code...');
+            switchToTab('ai');
+
+            try {
+                const response = await fetch('/api/ai/explain', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        code: code,
+                        language: currentLanguage
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                if (data.success && data.data && data.data.message) {
+                    showAI(data.data.message);
+                } else {
+                    throw new Error('Invalid response format from server');
+                }
+            } catch (error) {
+                console.error('Explain code error:', error);
+                showAI(`❌ Error: ${error.message}`);
+            }
+        }
+
+        // Convert code with AI
+        async function convertCode() {
+            if (!editor) {
+                showAI('Editor not ready. Please wait a moment and try again.');
+                return;
+            }
+            
+            const code = editor.getValue();
+            if (!code.trim()) {
+                showAI('Please write some code first!');
+                return;
+            }
+
+            // Show language selection for conversion
+            const targetLang = prompt('Enter target language (e.g., python, java, cpp, javascript):');
+            if (!targetLang) return;
+
+            showAI(`🔄 Converting to ${targetLang}...`);
+            switchToTab('ai');
+
+            try {
+                const response = await fetch('/api/ai/convert', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        code: code,
+                        sourceLanguage: currentLanguage,
+                        targetLanguage: targetLang
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                if (data.success && data.data && data.data.message) {
+                    showAI(data.data.message);
+                    showOutput(`Code converted to ${targetLang}! Check the AI Response tab.`, 'success');
+                } else {
+                    throw new Error('Invalid response format from server');
+                }
+            } catch (error) {
+                console.error('Convert code error:', error);
+                showAI(`❌ Error: ${error.message}`);
+            }
+        }
+
+        // Call backend AI API (for general chat/assistance)
+        async function callGeminiAPI(prompt, code) {
+            try {
+                // If code is provided, include it in the message
+                const message = code 
+                    ? `${prompt}\n\nCode:\n\`\`\`${currentLanguage}\n${code}\n\`\`\``
+                    : prompt;
+
+                const response = await fetch('/api/ai/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    const errorMessage = errorData.error || errorData.message || `HTTP ${response.status}: ${response.statusText}`;
+                    throw new Error(errorMessage);
+                }
+
+                const data = await response.json();
+                if (data.success && data.data && data.data.message) {
+                    return data.data.message;
+                } else {
+                    throw new Error('Invalid response format from server');
+                }
+            } catch (error) {
+                console.error('AI API call error:', error);
+                throw new Error(`AI request failed: ${error.message}`);
+            }
+        }
+
+        // Format AI response
+        function formatAIResponse(text) {
+            return text
+                .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+        }
+
+        // Clear editor
+        function clearEditor() {
+            if (!editor) {
+                showOutput('Editor not ready. Please wait a moment and try again.', 'error');
+                return;
+            }
+            
+            const config = LANGUAGE_CONFIGS[currentLanguage];
+            editor.setValue(config.template);
+            
+            // Clear localStorage for current language
+            localStorage.removeItem(`code_${currentLanguage}`);
+            
+            document.getElementById('inputField').value = '';
+            showOutput('Editor cleared! Template code loaded.', 'success');
+            
+            // Focus back to editor
+            setTimeout(() => editor.focus(), 100);
+        }
+        
+        // Clear all saved code
+        function clearAllSavedCode() {
+            if (!editor) {
+                showOutput('Editor not ready. Please wait a moment and try again.', 'error');
+                return;
+            }
+            
+            // Clear localStorage for all languages
+            Object.keys(LANGUAGE_CONFIGS).forEach(lang => {
+                localStorage.removeItem(`code_${lang}`);
+            });
+            
+            // Reset current editor to template
+            const config = LANGUAGE_CONFIGS[currentLanguage];
+            editor.setValue(config.template);
+            
+            document.getElementById('inputField').value = '';
+            showOutput('All saved code cleared! Starting fresh.', 'success');
+            
+            // Focus back to editor
+            setTimeout(() => editor.focus(), 100);
+        }
+
+        // Utility functions
+        function showOutput(message, type = 'info') {
+            const outputContent = document.getElementById('outputContent');
+            outputContent.innerHTML = `<div class="status ${type}">${message}</div>`;
+            switchToTab('output');
+        }
+
+        function showAI(message) {
+            const aiContent = document.getElementById('aiContent');
+            aiContent.innerHTML = message;
+        }
+
+        function switchToTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.console-pane').forEach(pane => pane.classList.remove('active'));
+            
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(tabName + 'Pane').classList.add('active');
+        }
+
+        function showExecutionStatus(status) {
+            const executionIndicator = document.getElementById('executionIndicator');
+            if (executionIndicator) {
+                executionIndicator.textContent = `⚡ ${status}`;
+            }
+        }
+
+        function setLoading(loading) {
+            const runBtn = document.getElementById('runBtn');
+            const btnText = runBtn.querySelector('.btn-text');
+            const loadingSpinner = runBtn.querySelector('.loading');
+            const executionIndicator = document.getElementById('executionIndicator');
+            
+            if (loading) {
+                btnText.style.display = 'none';
+                loadingSpinner.style.display = 'inline-block';
+                runBtn.disabled = true;
+                if (executionIndicator) {
+                    executionIndicator.style.display = 'inline';
+                }
+            } else {
+                btnText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+                runBtn.disabled = false;
+                if (executionIndicator) {
+                    executionIndicator.style.display = 'none';
+                }
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check authentication first
+            if (!window.authManager || !window.authManager.isAuthenticated()) {
+                showOutput('🔒 Please log in to access the Code Playground.', 'error');
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 2000);
+                return;
+            }
+            
+            console.log('DOM loaded, initializing...');
+            
+            // Initialize tabs first
+            initTabs();
+            
+            // Wait for CodeMirror to be fully loaded with timeout
+            let attempts = 0;
+            const maxAttempts = 50; // 5 seconds max
+            
+            const checkCodeMirror = () => {
+                attempts++;
+                if (typeof CodeMirror !== 'undefined') {
+                    console.log('CodeMirror loaded, initializing editor...');
+                    initEditor();
+                } else if (attempts < maxAttempts) {
+                    console.log(`CodeMirror not ready, attempt ${attempts}/${maxAttempts}...`);
+                    setTimeout(checkCodeMirror, 100);
+                } else {
+                    console.error('CodeMirror failed to load after maximum attempts');
+                    showOutput('Failed to load CodeMirror editor. Please refresh the page.', 'error');
+                    
+                                         // Show fallback textarea
+                     createFallbackEditor();
+                }
+            };
+            
+            // Start checking for CodeMirror
+            checkCodeMirror();
+            
+            // Language selector
+            document.getElementById('languageSelector').addEventListener('change', changeLanguage);
+            
+            // Action buttons
+            document.getElementById('runBtn').addEventListener('click', runCode);
+            document.getElementById('explainBtn').addEventListener('click', explainCode);
+            document.getElementById('convertBtn').addEventListener('click', convertCode);
+            document.getElementById('clearBtn').addEventListener('click', clearEditor);
+            document.getElementById('clearAllBtn').addEventListener('click', clearAllSavedCode);
+            document.getElementById('refreshBtn').addEventListener('click', () => {
+                if (editor && typeof editor.refresh === 'function') {
+                    editor.refresh();
+                    showOutput('Editor refreshed!', 'success');
+                } else {
+                    location.reload(); // Reload page if editor is broken
+                }
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    runCode();
+                }
+            });
+            
+            // Add click handler to focus editor when clicking on it
+            document.getElementById('codeEditor').addEventListener('click', () => {
+                if (editor && typeof editor.focus === 'function') {
+                    editor.focus();
+                    console.log('Editor focused via click');
+                }
+            });
+            
+            // Add keyboard event listener to test editor responsiveness
+            document.addEventListener('keydown', (e) => {
+                if (editor && document.activeElement === document.body) {
+                    // If no element is focused, focus the editor
+                    editor.focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

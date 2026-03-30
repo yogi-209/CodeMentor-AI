@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Webpage with Java</title>
+    <style>
+        /* CSS for parallax effect */
+        .parallax {
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .parallax1 {
+            background-image: url("   https://picsum.photos//1920/1080?random=1&text");
+        }
+
+        .parallax2 {
+            background-image: url(" https://picsum.photos//1920/1080?random=10&text  ");
+        }
+
+        .parallax3 {
+            background-image: url("  https://picsum.photos//1920/1080?random=12&text");
+        }
+
+        .parallax4 {
+            background-image: url("  https://picsum.photos/1920/1080?random=2&text");
+        }
+
+        .parallax5 {
+            background-image: url("  https://picsum.photos/1920/1080?random=3&text");
+        }
+
+        .parallax6 {
+            background-image: url("  https://picsum.photos/1920/1080?random=4&text");
+        }
+
+        .parallax7 {
+            background-image: url("  https://picsum.photos/1920/1080?random=5&text");
+        }
+
+        .parallax8 {
+            background-image: url( " https://picsum.photos/1920/1080?random=6&text");
+        }
+
+        .parallax9 {
+            background-image: url("  https://picsum.photos/1920/1080?random=7&text");
+        }
+
+        .content {
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            font-size: 18px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+        }
+
+        .content:hover {
+            transform: translateY(-5px) rotateX(2deg) rotateY(4deg) scale(1.02);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+    </style>
+    <!-- Chatbot CSS -->
+    <link rel="stylesheet" href="chatbot-popup.css">
+</head>
+<body>
+    <div class="parallax parallax1"></div>
+    <div class="content" onclick="moveContent(this)">
+        <h2>What is Java?</h2>
+        <p>
+            <span class="italic">Java</span> is a programming language and a platform. Java is a high-level, robust, object-oriented, and secure programming language.
+        </p>
+        <p>
+            Java was developed by Sun Microsystems (which is now the subsidiary of Oracle) in the year 1995. James Gosling is known as the father of Java. Before Java, its name was Oak. Since Oak was already a registered company, James Gosling and his team changed the name from Oak to Java.
+        </p>
+        <p>
+            Java is used in a wide variety of computing platforms from embedded devices and mobile phones to enterprise servers and supercomputers. It is particularly known for its portability across platforms and devices, thanks to its write once, run anywhere (WORA) capability.
+        </p>
+        <p>
+            Java applications are typically compiled to bytecode that can run on any Java Virtual Machine (JVM) regardless of the underlying computer architecture. The syntax of Java is largely influenced by C++ and C, but it has fewer low-level facilities than either of them.
+        </p>
+    </div>
+    <div class="parallax parallax2"></div>
+    <div class="content" onclick="moveContent(this)">
+        <h2>Java OOPs Concepts</h2>
+        <p>
+            Object-Oriented Programming (OOP) is a paradigm that uses "objects" to design applications and computer programs. It simplifies software development and maintenance by providing some rules and principles. The fundamental concepts of OOP are:
+        </p>
+        <ul>
+            <li><b>Class:</b> A blueprint or prototype from which objects are created.</li>
+            <li><b>Object:</b> An instance of a class. It can hold both data and methods.</li>
+            <li><b>Inheritance:</b> A mechanism where a new class inherits the properties and behavior of another class.</li>
+            <li><b>Polymorphism:</b> The ability to present the same interface for different data types.</li>
+            <li><b>Abstraction:</b> Hiding the complex implementation details and showing only the essential features of the object.</li>
+            <li><b>Encapsulation:</b> Wrapping the data (variables) and code (methods) together as a single unit and restricting access to some of the object's components.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax3"></div>
+    <div class="content" onclick="moveContent(this)">
+        <h2>Java Data Types</h2>
+        <p>
+            Data types in Java are of different sizes and values that can be stored in the variable that is made as per convenience and circumstances to cover up all test cases. Java has two categories in which data types are segregated:
+        </p>
+        <ul>
+            <li><b>Primitive Data Types:</b> These include boolean, char, byte, short, int, long, float, and double.</li>
+            <li><b>Non-Primitive Data Types:</b> These include classes, arrays, and interfaces.</li>
+        </ul>
+        <p>
+            Java's data types are designed to handle various kinds of data, ranging from simple numbers to complex objects.
+        </p>
+    </div>
+    <div class="parallax parallax4"></div>
+    <div class="content" onclick="moveContent(this)">
+        <h2>Primitive Data Types</h2>
+        <p>
+            Primitive data types are predefined by the language and named by a keyword. These data types serve as the building blocks for data manipulation in Java.
+        </p>
+        <ul>
+            <li><b>boolean:</b> Represents one bit of information, either true or false.</li>
+            <li><b>char:</b> A single 16-bit Unicode character.</li>
+            <li><b>byte:</b> An 8-bit signed two's complement integer.</li>
+            <li><b>short:</b> A 16-bit signed two's complement integer.</li>
+            <li><b>int:</b> A 32-bit signed two's complement integer.</li>
+            <li><b>long:</b> A 64-bit signed two's complement integer.</li>
+            <li><b>float:</b> A single-precision 32-bit IEEE 754 floating point.</li>
+            <li><b>double:</b> A double-precision 64-bit IEEE 754 floating point.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax5"></div>
+    <div class="content" onclick="moveContent(this)">
+        <h2>Non-Primitive Data Types</h2>
+        <p>
+            Non-Primitive data types, also called reference types, are created by the programmer and are not defined by Java (except for String). These include:
+        </p>
+        <ul>
+            <li><b>String:</b> An array of characters. Strings in Java are not terminated with a null character.</li>
+            <li><b>Class:</b> A blueprint from which objects are created.</li>
+            <li><b>Array:</b> A collection of variables of the same type.</li>
+            <li><b>Interface:</b> A reference type in Java, similar to a class, that can contain only constants, method signatures, default methods, static methods, and nested types.</li>
+        </ul>
+    </div>
+    <div class="parallax parallax6"></div>
+    <div class="content" onclick="moveContent(this)">
+        <h2>Java Class</h2>
+        <p>
+            A class is a user-defined blueprint or prototype from which objects are created. It represents the set of properties or methods that are common to all objects of one type.
+        </p>
+        <p>
+            A class in Java can contain:
+        </p>
+        <ul>
+            <li>Fields (variables)</li>
+            <li>Methods to operate on the fields</li>
+            <li>Constructors</li>
+            <li>Blocks</li>
+            <li>Nested classes and interfaces</li>
+        </ul>
+        <p>
+            Here's a simple example of a class in Java:
+        </p>
+        <pre>
+class Animal {
+    String name;
+    int age;
+
+    void display() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+        </pre>
+    </div>
+    <div class="parallax parallax7"></div>
+    <div class="content" onclick="moveContent(this)">
+        <h2>Java Object</h2>
+        <p>
+            An object is a basic unit of Object-Oriented Programming and represents real-life entities. A typical Java program creates many objects, which as you know, interact by invoking methods.
+        </p>
+        <p>
+            An object consists of:
+        </p>
+        <ul>
+            <li>State: It is represented by attributes of an object. It also reflects the properties of an object.</li>
+            <li>Behavior: It is represented by methods of an object. It also reflects the response of an object with other objects.</li>
+            <li>Identity: It gives a unique name to an object and enables one object to interact with other objects.</li>
+        </ul>
+        <p>
+            Here's how you can create an object in Java:
+        </p>
+        <pre>
+class Animal {
+    String name;
+    int age;
+
+    void display() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal dog = new Animal();
+        dog.name = "Buddy";
+        dog.age = 5;
+        dog.display();
+    }
+}
+        </pre>
+    </div>
+    <div class="parallax parallax8"></div>
+    <div class="content" onclick="moveContent(this)">
+        <h2>Java Interface</h2>
+        <p>
+            An interface in Java is a blueprint of a class. It has static constants and abstract methods. The interface in Java is a mechanism to achieve abstraction and multiple inheritance.
+        </p>
+        <p>
+            Interfaces specify what a class must do and not how. It is the blueprint of the class. An interface is about capabilities like an Employee can extend a class Person and implement an interface Payroll and so on.
+        </p>
+        <p>
+            Here's an example of an interface in Java:
+        </p>
+        <pre>
+interface Animal {
+    void eat();
+    void travel();
+}
+
+class Mammal implements Animal {
+    public void eat() {
+        System.out.println("Mammal eats");
+    }
+
+    public void travel() {
+        System.out.println("Mammal travels");
+    }
+
+    public static void main(String args[]) {
+        Mammal m = new Mammal();
+        m.eat();
+        m.travel();
+    }
+}
+        </pre>
+    </div>
+
+    <script>
+        // Function to move content div up on click for demonstration
+        function moveContent(element) {
+            element.style.position = 'relative';
+            element.style.top = "-20px";
+        }
+    </script>
+    
+    <!-- Chatbot JavaScript -->
+    <script src="chatbot-popup.js"></script>
+</body>
+</html>
