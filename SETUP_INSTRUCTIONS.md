@@ -1,4 +1,4 @@
-# 🚀 CodingStartup Setup Instructions
+# 🚀 CodeMentor AI Setup Instructions
 
 ## Prerequisites
 - Node.js (v16 or higher) ✅ Already installed
