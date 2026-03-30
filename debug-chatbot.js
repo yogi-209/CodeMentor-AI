@@ -1,5 +1,5 @@
 // Debug script for chatbot API
-const API_KEY = 'AIzaSyDMfOau3KqCvjlfi4DEMK06dhjoC0aqAcs';
+const API_KEY = 'AIzaS';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
 
 async function testAPI() {
