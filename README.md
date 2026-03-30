@@ -1,4 +1,4 @@
-# 🚀 CodingStartup - Full-Stack Web Application
+# 🚀 CodeMentor AI- Full-Stack Web Application
 
 A complete web application with user authentication, code playground, and interactive learning features.
 
