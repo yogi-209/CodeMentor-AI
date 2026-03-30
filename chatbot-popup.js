@@ -3,8 +3,7 @@ class ChatbotPopup {
     constructor() {
        
         this.API_KEYS = [
-            'AIzaSyD4blWuXpc51mwSrTlOMdC8aAlEsxaOPkY', 
-            'AIzaSyDMfOau3KqCvjlfi4DEMK06dhjoC0aqAcs'
+            'AIzaSyD4blWuAcs'
         ];
         this.API_URLS = [
             'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
