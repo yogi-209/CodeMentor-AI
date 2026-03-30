@@ -1,7 +1,7 @@
 // Working Chatbot Implementation
 class WorkingChatbot {
     constructor() {
-        this.API_KEY = 'AIzaSyD4blWuXpc51mwSrTlOMdC8aAlEsxaOPkY';
+        this.API_KEY = 'AIzaSyD4blWY';
         this.API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
         this.isOpen = false;
         this.isTyping = false;
